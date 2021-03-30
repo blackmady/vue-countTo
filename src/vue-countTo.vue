@@ -62,7 +62,7 @@ export default {
     },
     easingFn: {
       type: Function,
-      default(t, b, c, d) {
+      default:()=>(t, b, c, d)=> {
         return c * (-Math.pow(2, -10 * t / d) + 1) * 1024 / 1023 + b;
       }
     }

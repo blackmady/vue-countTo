@@ -62,7 +62,7 @@ export default {
     },
     easingFn: {
       type: Function,
-      default:()=>(t, b, c, d)=> {
+      default:(t, b, c, d)=> {
         return c * (-Math.pow(2, -10 * t / d) + 1) * 1024 / 1023 + b;
       }
     }
@@ -170,7 +170,7 @@ export default {
       return !isNaN(parseFloat(val))
     },
     formatNumber(num) {
-      num = num.toFixed(this.decimals);
+      num = num||'0'.toFixed(this.decimals);
       num += '';
       const x = num.split('.');
       let x1 = x[0];

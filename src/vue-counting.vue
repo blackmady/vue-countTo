@@ -1,71 +1,74 @@
 <template>
-    <span>
-      {{displayValue}}
-    </span>
+  <span>
+    {{ displayValue }}
+  </span>
 </template>
 <script>
-import { requestAnimationFrame, cancelAnimationFrame } from './requestAnimationFrame.js'
+import {
+  requestAnimationFrame,
+  cancelAnimationFrame,
+} from "./requestAnimationFrame.js";
 export default {
   props: {
     startVal: {
       type: Number,
       required: false,
-      default: 0
+      default: 0,
     },
     endVal: {
       type: Number,
       required: false,
-      default: 2017
+      default: 2017,
     },
     duration: {
       type: Number,
       required: false,
-      default: 3000
+      default: 3000,
     },
     autoplay: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     decimals: {
       type: Number,
       required: false,
       default: 0,
       validator(value) {
-        return value >= 0
-      }
+        return value >= 0;
+      },
     },
     decimal: {
       type: String,
       required: false,
-      default: '.'
+      default: ".",
     },
     separator: {
       type: String,
       required: false,
-      default: ','
+      default: ",",
     },
     prefix: {
       type: String,
       required: false,
-      default: ''
+      default: "",
     },
     suffix: {
       type: String,
       required: false,
-      default: ''
+      default: "",
     },
     useEasing: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     easingFn: {
       type: Function,
-      default:(t, b, c, d)=> {
-        return c * (-Math.pow(2, -10 * t / d) + 1) * 1024 / 1023 + b;
-      }
-    }
+      default: (t, b, c, d) => {
+        return (c * (-Math.pow(2, (-10 * t) / d) + 1) * 1024) / 1023 + b;
+      },
+    },
   },
   data() {
     return {
@@ -77,13 +80,13 @@ export default {
       startTime: null,
       timestamp: null,
       remaining: null,
-      rAF: null
+      rAF: null,
     };
   },
   computed: {
     countDown() {
-      return this.startVal > this.endVal
-    }
+      return this.startVal > this.endVal;
+    },
   },
   watch: {
     startVal() {
@@ -95,13 +98,13 @@ export default {
       if (this.autoplay) {
         this.start();
       }
-    }
+    },
   },
   mounted() {
     if (this.autoplay) {
       this.start();
     }
-    this.$emit('mountedCallback')
+    this.$emit("mountedCallback");
   },
   methods: {
     start() {
@@ -142,50 +145,71 @@ export default {
 
       if (this.useEasing) {
         if (this.countDown) {
-          this.printVal = this.localStartVal - this.easingFn(progress, 0, this.localStartVal - this.endVal, this.localDuration)
+          this.printVal =
+            this.localStartVal -
+            this.easingFn(
+              progress,
+              0,
+              this.localStartVal - this.endVal,
+              this.localDuration
+            );
         } else {
-          this.printVal = this.easingFn(progress, this.localStartVal, this.endVal - this.localStartVal, this.localDuration);
+          this.printVal = this.easingFn(
+            progress,
+            this.localStartVal,
+            this.endVal - this.localStartVal,
+            this.localDuration
+          );
         }
       } else {
         if (this.countDown) {
-          this.printVal = this.localStartVal - ((this.localStartVal - this.endVal) * (progress / this.localDuration));
+          this.printVal =
+            this.localStartVal -
+            (this.localStartVal - this.endVal) *
+              (progress / this.localDuration);
         } else {
-          this.printVal = this.localStartVal + (this.endVal - this.localStartVal) * (progress / this.localDuration);
+          this.printVal =
+            this.localStartVal +
+            (this.endVal - this.localStartVal) *
+              (progress / this.localDuration);
         }
       }
       if (this.countDown) {
-        this.printVal = this.printVal < this.endVal ? this.endVal : this.printVal;
+        this.printVal =
+          this.printVal < this.endVal ? this.endVal : this.printVal;
       } else {
-        this.printVal = this.printVal > this.endVal ? this.endVal : this.printVal;
+        this.printVal =
+          this.printVal > this.endVal ? this.endVal : this.printVal;
       }
 
-      this.displayValue = this.formatNumber(this.printVal)
+      this.displayValue = this.formatNumber(this.printVal);
       if (progress < this.localDuration) {
         this.rAF = requestAnimationFrame(this.count);
       } else {
-        this.$emit('callback');
+        this.$emit("callback");
       }
     },
     isNumber(val) {
-      return !isNaN(parseFloat(val))
+      return !isNaN(parseFloat(val));
     },
     formatNumber(num) {
-      num = num||'0'.toFixed(this.decimals);
-      num += '';
-      const x = num.split('.');
+      num = typeof num === "string" ? num - 0 : num || 0;
+      num = num.toFixed(this.decimals);
+      num += "";
+      const x = num.split(".");
       let x1 = x[0];
-      const x2 = x.length > 1 ? this.decimal + x[1] : '';
+      const x2 = x.length > 1 ? this.decimal + x[1] : "";
       const rgx = /(\d+)(\d{3})/;
       if (this.separator && !this.isNumber(this.separator)) {
         while (rgx.test(x1)) {
-          x1 = x1.replace(rgx, '$1' + this.separator + '$2');
+          x1 = x1.replace(rgx, "$1" + this.separator + "$2");
         }
       }
       return this.prefix + x1 + x2 + this.suffix;
-    }
+    },
   },
   destroyed() {
-    cancelAnimationFrame(this.rAF)
-  }
+    cancelAnimationFrame(this.rAF);
+  },
 };
 </script>

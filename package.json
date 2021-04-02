@@ -1,18 +1,17 @@
 {
-  "name": "vue-count-to",
+  "name": "vue-counting",
   "description": "It's a vue component that will count to a target number at a specified duration",
-  "version": "1.0.14",
+  "version": "1.0.0",
   "author": "Pan <panfree23@gmail.com>",
-  "main": "dist/vue-count-to.min.js",
+  "main": "dist/vue-counting.min.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot --content-base='./demo/'",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "license": "MIT",
-  "homepage": "https://panjiachen.github.io/countTo/demo/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/PanJiaChen/vue-countTo.git"
+    "url": "git://github.com/blackmady/vue-counting.git"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

@@ -1,5 +1,5 @@
-import CountTo from './vue-countTo.vue';
-export default CountTo;
+import counting from './vue-counting.vue';
+export default counting;
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.component('count-to', CountTo);
+  window.Vue.component('counting', counting);
 }

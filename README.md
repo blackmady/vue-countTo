@@ -1,4 +1,4 @@
-# vue-countTo
+# vue-counting
 
 > It's a vue component that will count to a target number at a specified duration
 
@@ -19,20 +19,20 @@ It is learn from countUp.js;
 
 ### How to use?
 ```bash
-npm install vue-count-to
+npm install vue-counting
 ```
 
 ### Example
 
 ```vue
 <template>
-  <countTo :startVal='startVal' :endVal='endVal' :duration='3000'></countTo>
+  <counting :startVal='startVal' :endVal='endVal' :duration='3000'></counting>
 </template>
 
 <script>
-  import countTo from 'vue-count-to';
+  import counting from 'vue-counting';
   export default {
-    components: { countTo },
+    components: { counting },
     data () {
       return {
         startVal: 0,
@@ -42,11 +42,6 @@ npm install vue-count-to
   }
 </script>
 ```
-demo:
-
-![demo](https://github.com/PanJiaChen/vue-countTo/blob/master/countDemo.gif)
-
-Use CDN Script: [demo](https://github.com/PanJiaChen/vue-countTo/blob/master/demo/index.html)
 
 
 
